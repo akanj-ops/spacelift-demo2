@@ -35,18 +35,11 @@ output "subnet_id" {
   description = "ID of the main subnet"
 }
 
-data "aws_subnet" "selected" {
-  id = var.subnet_id
-}
-
-data "aws_vpc" "selected" {
-  id = data.aws_subnet.selected.vpc_id
-}
 
 resource "aws_security_group" "app" {
   name        = "orbit-labs-app-sg"
   description = "Security group for Orbit Labs app"
-  vpc_id      = data.aws_vpc.selected.id
+  vpc_id      = aws_vpc.main.id
 
   tags = {
     name    = "Orbit Labs App SG"
