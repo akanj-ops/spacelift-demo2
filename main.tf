@@ -35,11 +35,6 @@ output "subnet_id" {
   description = "ID of the main subnet"
 }
 
-variable "subnet_id" {
-  type        = string
-  description = "ID of the subnet from networking stack"
-}
-
 data "aws_subnet" "selected" {
   id = var.subnet_id
 }
