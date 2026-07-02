@@ -11,12 +11,6 @@ provider "aws" {
   region = "us-east-1"
 }
 
-variable "subnet_id" {
-  type        = string
-  description = "ID of the subnet from networking stack"
-  default     = "subnet-064b66c8736d94017"
-}
-
 resource "aws_vpc" "main" {
   cidr_block = "10.0.0.0/16"
   tags = {
@@ -40,6 +34,10 @@ output "subnet_id" {
   description = "ID of the main subnet"
 }
 
+variable "subnet_id" {
+  type        = string
+  description = "ID of the subnet from networking stack"
+}
 
 data "aws_subnet" "selected" {
   id = var.subnet_id
