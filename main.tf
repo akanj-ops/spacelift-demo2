@@ -14,6 +14,7 @@ provider "aws" {
 variable "subnet_id" {
   type        = string
   description = "ID of the subnet from networking stack"
+  default     = "subnet-064b66c8736d94017"
 }
 
 resource "aws_vpc" "main" {
