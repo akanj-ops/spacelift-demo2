@@ -11,6 +11,7 @@ provider "aws" {
   region = "us-east-1"
 }
 
+# 1. Input variable for external subnet data lookup
 variable "subnet_id" {
   type        = string
   description = "ID of the subnet from networking stack"
@@ -19,7 +20,7 @@ variable "subnet_id" {
 resource "aws_vpc" "main" {
   cidr_block = "10.0.0.0/16"
   tags = {
-    name    = "Orbit Labs VPC"
+    Name    = "Orbit Labs VPC"
     project = "Orbit-labs"
   }
 }
@@ -29,16 +30,16 @@ resource "aws_subnet" "main" {
   cidr_block        = "10.0.1.0/24"
   availability_zone = "us-east-1a"
   tags = {
-    name    = "Orbit Labs Subnet"
+    Name    = "Orbit Labs Subnet"
     project = "Orbit-labs"
   }
 }
 
-output "subnet_id" {
+# FIX: Renamed from "subnet_id" to prevent collision with the variable
+output "main_subnet_id" {
   value       = aws_subnet.main.id
   description = "ID of the main subnet"
 }
-
 
 data "aws_subnet" "selected" {
   id = var.subnet_id
@@ -54,7 +55,7 @@ resource "aws_security_group" "app" {
   vpc_id      = data.aws_vpc.selected.id
 
   tags = {
-    name    = "Orbit Labs App SG"
+    Name    = "Orbit Labs App SG"
     project = "Orbit-labs"
   }
 }
